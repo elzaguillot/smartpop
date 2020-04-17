@@ -1,0 +1,28 @@
+datamono <- read.table("example2_monoall.txt",h=T)
+datapoly <- read.table("example2_polyall.txt",h=T)
+
+
+n=length(datamono$mt.thetapi)
+png("example2_points_theta.png",width=400,height=400)
+plot(datapoly$time+1,datapoly$y.thetapi,pch=1,col='red',cex=0.3,ylab="Theta Pi",xlab="Time in generations",main='Effect of polygamy on Y chromosome diversity')
+points(datamono$time,datamono$y.thetapi,col='blue',pch=1,cex=0.3)
+legend('topright',c('monogamy','polygamy'),pch=1,col=c('blue','red'))
+dev.off()
+
+png("example2_mean_theta.png",width=400,height=400)
+generation_points <- unique(datamono$time)
+average_mono <- tapply(datamono$y.thetapi,datamono$time,mean)
+average_poly <- tapply(datapoly$y.thetapi,datapoly$time,mean)
+plot(generation_points,average_poly,col='red',type='l',ylab='Theta Pi (average)',xlab='Time in generations',main='Effect of polygamy on Y chromosome diversity')
+lines(generation_points,average_mono,col='blue')
+legend('topright',c('monogamy','polygamy'),lty=1,col=c('blue','red'))
+dev.off()
+
+png("example2_mean_nbHap.png",width=400,height=400)
+generation_points <- unique(datamono$time)
+average_mono <- tapply(datamono$y.nbhap,datamono$time,mean)
+average_poly <- tapply(datapoly$y.nbhap,datapoly$time,mean)
+plot(generation_points,average_poly,col='red',type='l',ylab='Number of haplotypes (average)',xlab='Time in generations',main='Effect of polygamy on Y chromosome diversity')
+lines(generation_points,average_mono,col='blue')
+legend('bottomright',c('monogamy','polygamy'),lty=1,col=c('blue','red'))
+dev.off()
